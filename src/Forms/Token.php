@@ -29,6 +29,16 @@ class Token {
 	public function hooks() {
 
 		add_filter( 'wpforms_frontend_form_atts', [ $this, 'add_token_to_form_atts' ] );
+		add_action( 'wpforms_display_submit_before', [$this, 'add_hidden_input_on_amp_form' ] );
+	}
+
+	/**
+	 * Add hidden token field on AMP pages.
+	 */
+	public function add_hidden_input_on_amp_form() {
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			echo '<input type="hidden" class="wpforms-token" name="wpforms[token]" value="' . esc_attr( $this->get() ) . '"/>';
+		}
 	}
 
 	/**

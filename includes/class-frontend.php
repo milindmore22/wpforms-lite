@@ -1544,7 +1544,7 @@ class WPForms_Frontend {
 	 */
 	public function missing_assets_error_js() {
 
-		if ( ! wpforms_current_user_can() ) {
+		if ( ! wpforms_current_user_can() || ( wpforms_current_user_can() && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) ) {
 			return;
 		}
 
