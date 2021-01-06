@@ -92,7 +92,7 @@ class WPForms_Process {
 			$this->process( stripslashes_deep( $_POST['wpforms'] ) ); // phpcs:ignore
 
 			$form_id = wp_unslash( $_POST['wpforms']['id'] );
-			if ( wpforms_is_amp() ) {
+			if ( wp_is_json_request() ) {
 				// Send 400 Bad Request when there are errors.
 				if ( ! empty( $this->errors[ $form_id ] ) ) {
 					$message = $this->errors[ $form_id ]['header'];
@@ -333,7 +333,7 @@ class WPForms_Process {
 
 		// If spam - return early.
 		// For antispam, we want to make sure that we have a value, we are not using AMP, and the value is an error string.
-		if ( $antispam && ! wpforms_is_amp() && is_string( $antispam ) ) {
+		if ( $antispam && is_string( $antispam ) ) {
 
 			if ( $antispam ) {
 				$this->errors[ $form_id ]['header'] = $antispam;
